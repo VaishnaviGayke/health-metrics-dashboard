@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Metrics Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="container my-4 text-center">
+        <h1 class="text-primary fw-bold">
+            🌍 Health Metrics Dashboard
+        </h1>
+        <p class="text-secondary fs-5">Live COVID-19 Statistics with Visual Insights</p>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="container mb-4">
+        <form method="get" class="row justify-content-center gy-2 gx-3 align-items-center">
+            <div class="col-md-4">
+                <label for="continent" class="form-label">Continent:</label>
+                <select class="form-select" name="continent" onchange="this.form.submit()">
+                    <option value="">All</option>
+                    {% for c in continents %}
+                        <option value="{{ c }}" {% if selected_continent == c %}selected{% endif %}>{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="country" class="form-label">Country:</label>
+                <select class="form-select" name="country" onchange="this.form.submit()">
+                    <option value="">All</option>
+                    {% for c in countries %}
+                        <option value="{{ c }}" {% if selected_country == c %}selected{% endif %}>{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <!-- Chart Cards -->
+    <div class="container">
+        {% if chart_bar %}
+        <div class="card chart-container shadow-sm">
+            <div class="card-body">
+                {{ chart_bar | safe }}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if chart_pie %}
+        <div class="card chart-container shadow-sm">
+            <div class="card-body">
+                {{ chart_pie | safe }}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if chart_line %}
+        <div class="card chart-container shadow-sm">
+            <div class="card-body">
+                {{ chart_line | safe }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5 mb-3 text-muted small">
+        Auto-refreshes every 60 seconds • Built with Flask, Plotly & Bootstrap
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Auto-refresh every 60 seconds -->
+    <script>
+        setTimeout(function(){
+            window.location.reload(1);
+        }, 60000);
+    </script>
+</body>
+</html>
