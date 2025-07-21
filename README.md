@@ -20,7 +20,9 @@ An interactive COVID-19 dashboard built using *Flask*, *Plotly*, *Pandas*, and *
 ### Installation
 
 git clone https://github.com/your-username/health-metrics-dashboard.git
+
 cd health-metrics-dashboard
+
 pip install flask pandas plotly requests
 
 ### Running the App
